@@ -1,35 +1,6 @@
-"use client";
-
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [backendStatus, setBackendStatus] = useState<string>("Loading...");
-  const [testMessage, setTestMessage] = useState<string>("");
-
-  useEffect(() => {
-    // Backend health check
-    fetch("http://localhost:5000/api/health")
-      .then((res) => res.json())
-      .then(() => {
-        setBackendStatus("Connected to Backend!");
-      })
-      .catch((err) => {
-        setBackendStatus("Backend connection failed");
-        console.error("Backend error:", err);
-      });
-
-    // Test endpoint
-    fetch("http://localhost:5000/api/test")
-      .then((res) => res.json())
-      .then((data) => {
-        setTestMessage(data.message);
-      })
-      .catch((err) => {
-        console.error("Test endpoint error:", err);
-      });
-  }, []);
-
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -41,22 +12,6 @@ export default function Home() {
           height={38}
           priority
         />
-
-        {/* Backend Status */}
-        <div className="text-center">
-          <h2 className="text-xl font-bold mb-4">Backend Status</h2>
-          <p
-            className={`mb-2 ${
-              backendStatus.includes("Connected")
-                ? "text-green-600"
-                : "text-red-600"
-            }`}
-          >
-            {backendStatus}
-          </p>
-          {testMessage && <p className="text-blue-600">{testMessage}</p>}
-        </div>
-
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
